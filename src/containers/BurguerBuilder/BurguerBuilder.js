@@ -18,7 +18,7 @@ const BurguerBuilder = () => {
     cheese: 0,
     meat: 0
   })
-  const [totalPrice, setTotalPrice] = useState({ totalPrice: 4 })
+  const [totalPrice, setTotalPrice] = useState(4)
 
   const addIngredientHandler = type => {
     const oldCount = ingredients[type]
@@ -69,6 +69,7 @@ const BurguerBuilder = () => {
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
         disabled={disabledInfo}
+        price={totalPrice}
       />
     </Aux>
   )
