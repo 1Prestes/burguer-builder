@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import Aux from '../../hoc/Aux'
 import Burguer from '../../components/Burguer/Burguer'
 import BuildControls from '../../components/Burguer/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Burguer/OrderSummary/OrderSummary'
 
 const INGREDIENTS_PRICES = {
   salad: 0.5,
@@ -76,6 +78,9 @@ const BurguerBuilder = () => {
 
   return (
     <Aux>
+      <Modal>
+        <OrderSummary ingredients={ingredients} />
+      </Modal>
       <Burguer ingredients={ingredients} />
       <BuildControls
         ingredientAdded={addIngredientHandler}
