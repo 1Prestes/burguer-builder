@@ -21,15 +21,16 @@ const BurguerBuilder = () => {
     meat: 0
   })
   const [totalPrice, setTotalPrice] = useState(4)
-  const [purchseable, setPurchseable] = useState(false)
+  const [purchaseable, setPurchaseable] = useState(false)
+  const [purchasing, setPurchasing] = useState(false)
 
-  const updatedPurchseable = ingredients => {
+  const updatedPurchaseable = ingredients => {
     const sum = Object.keys(ingredients)
       .map(igKey => ingredients[igKey])
       .reduce((sum, el) => {
         return sum + el
       }, 0)
-    setPurchseable(sum > 0)
+    setPurchaseable(sum > 0)
   }
 
   const addIngredientHandler = type => {
@@ -47,7 +48,7 @@ const BurguerBuilder = () => {
 
     setIngredients(updatedIngredients)
     setTotalPrice(newPrice)
-    updatedPurchseable(updatedIngredients)
+    updatedPurchaseable(updatedIngredients)
   }
 
   const removeIngredientHandler = type => {
@@ -66,7 +67,11 @@ const BurguerBuilder = () => {
 
     setIngredients(updatedIngredients)
     setTotalPrice(newPrice)
-    updatedPurchseable(updatedIngredients)
+    updatedPurchaseable(updatedIngredients)
+  }
+
+  const purchaseHandler = () => {
+    setPurchasing(true)
   }
 
   const disabledInfo = {
@@ -78,7 +83,7 @@ const BurguerBuilder = () => {
 
   return (
     <Aux>
-      <Modal>
+      <Modal show={purchasing}>
         <OrderSummary ingredients={ingredients} />
       </Modal>
       <Burguer ingredients={ingredients} />
@@ -86,7 +91,8 @@ const BurguerBuilder = () => {
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
         disabled={disabledInfo}
-        purchseable={purchseable}
+        purchaseable={purchaseable}
+        ordered={purchaseHandler}
         price={totalPrice}
       />
     </Aux>
