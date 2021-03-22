@@ -37,12 +37,39 @@ const BurguerBuilder = () => {
     setTotalPrice(newPrice)
   }
 
-  const removeIngredientHandler = type => {}
+  const removeIngredientHandler = type => {
+    const oldCount = ingredients[type]
+    if (oldCount <= 0) return
+    const updateCount = oldCount - 1
+    const updatedIngredients = {
+      ...ingredients
+    }
+
+    updatedIngredients[type] = updateCount
+
+    const priceDeduction = INGREDIENTS_PRICES[type]
+    const oldPrice = totalPrice
+    const newPrice = oldPrice - priceDeduction
+
+    setIngredients(updatedIngredients)
+    setTotalPrice(newPrice)
+  }
+
+  const disabledInfo = {
+    ...ingredients
+  }
+  for (let key in disabledInfo) {
+    disabledInfo[key] = disabledInfo[key] <= 0
+  }
 
   return (
     <Aux>
       <Burguer ingredients={ingredients} />
-      <BuildControls ingredientAdded={addIngredientHandler} />
+      <BuildControls
+        ingredientAdded={addIngredientHandler}
+        ingredientRemoved={removeIngredientHandler}
+        disabled={disabledInfo}
+      />
     </Aux>
   )
 }
