@@ -19,6 +19,16 @@ const BurguerBuilder = () => {
     meat: 0
   })
   const [totalPrice, setTotalPrice] = useState(4)
+  const [purchseable, setPurchseable] = useState(false)
+
+  const updatedPurchseable = ingredients => {
+    const sum = Object.keys(ingredients)
+      .map(igKey => ingredients[igKey])
+      .reduce((sum, el) => {
+        return sum + el
+      }, 0)
+    setPurchseable(sum > 0)
+  }
 
   const addIngredientHandler = type => {
     const oldCount = ingredients[type]
@@ -35,6 +45,7 @@ const BurguerBuilder = () => {
 
     setIngredients(updatedIngredients)
     setTotalPrice(newPrice)
+    updatedPurchseable(updatedIngredients)
   }
 
   const removeIngredientHandler = type => {
@@ -53,6 +64,7 @@ const BurguerBuilder = () => {
 
     setIngredients(updatedIngredients)
     setTotalPrice(newPrice)
+    updatedPurchseable(updatedIngredients)
   }
 
   const disabledInfo = {
@@ -69,6 +81,7 @@ const BurguerBuilder = () => {
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
         disabled={disabledInfo}
+        purchseable={purchseable}
         price={totalPrice}
       />
     </Aux>
