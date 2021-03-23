@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
 import Aux from '../../hoc/Aux'
-import Burguer from '../../components/Burguer/Burguer'
-import BuildControls from '../../components/Burguer/BuildControls/BuildControls'
+import Burger from '../../components/Burger/Burger'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
-import OrderSummary from '../../components/Burguer/OrderSummary/OrderSummary'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 const INGREDIENTS_PRICES = {
   salad: 0.5,
@@ -13,7 +13,7 @@ const INGREDIENTS_PRICES = {
   bacon: 0.7
 }
 
-const BurguerBuilder = () => {
+const BurgerBuilder = () => {
   const [ingredients, setIngredients] = useState({
     salad: 0,
     bacon: 0,
@@ -90,7 +90,7 @@ const BurguerBuilder = () => {
       <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         <OrderSummary ingredients={ingredients} />
       </Modal>
-      <Burguer ingredients={ingredients} />
+      <Burger ingredients={ingredients} />
       <BuildControls
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
@@ -103,4 +103,4 @@ const BurguerBuilder = () => {
   )
 }
 
-export default BurguerBuilder
+export default BurgerBuilder
