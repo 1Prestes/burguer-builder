@@ -74,6 +74,10 @@ const BurguerBuilder = () => {
     setPurchasing(true)
   }
 
+  const purchaseCancelHandler = () => {
+    setPurchasing(false)
+  }
+
   const disabledInfo = {
     ...ingredients
   }
@@ -83,7 +87,7 @@ const BurguerBuilder = () => {
 
   return (
     <Aux>
-      <Modal show={purchasing}>
+      <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         <OrderSummary ingredients={ingredients} />
       </Modal>
       <Burguer ingredients={ingredients} />
