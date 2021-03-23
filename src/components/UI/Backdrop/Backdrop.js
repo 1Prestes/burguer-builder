@@ -4,7 +4,7 @@ import classes from './Backdrop.css'
 
 const Backdrop = props =>
   props.show ? (
-    <div className={classes.Backdrop} onClick={props.clicked}></div>
+    <div className={classes.Backdrop} onClick={() => props.clicked(props.show)}></div>
   ) : null
 
 export default Backdrop
