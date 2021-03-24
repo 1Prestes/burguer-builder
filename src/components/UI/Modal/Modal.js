@@ -22,6 +22,8 @@ const Modal = props => {
   )
 }
 const showIsEqual = (prevProps, nextProps) => {
-  return prevProps.show === nextProps.show
+  return (
+    prevProps.show === nextProps.show && nextProps.loading !== prevProps.loading
+  )
 }
 export default React.memo(Modal, showIsEqual)
