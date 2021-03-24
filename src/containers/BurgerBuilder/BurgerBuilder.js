@@ -5,6 +5,7 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import axios from '../../axios-orders'
 
 const INGREDIENTS_PRICES = {
   salad: 0.5,
@@ -79,7 +80,25 @@ const BurgerBuilder = () => {
   }
 
   const purchaseContinueHandler = () => {
-    alert('You Continue!')
+    const order = {
+      ingredients,
+      totalPrice,
+      customer: {
+        name: 'Goku',
+        address: {
+          street: 'Any Street',
+          zipCode: '11630000',
+          country: 'Brazil'
+        },
+        email: 'any@mail.com'
+      },
+      deliveryMethod: 'fastest'
+    }
+
+    axios
+      .post('/orders.json', order)
+      .then(response => console.log(response))
+      .catch(err => console.error(err))
   }
 
   const disabledInfo = {
