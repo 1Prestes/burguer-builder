@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
@@ -17,16 +17,25 @@ const INGREDIENTS_PRICES = {
 }
 
 const BurgerBuilder = () => {
-  const [ingredients, setIngredients] = useState({
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-  })
+  const [ingredients, setIngredients] = useState(null)
   const [totalPrice, setTotalPrice] = useState(4)
   const [purchaseable, setPurchaseable] = useState(false)
   const [purchasing, setPurchasing] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://burger-builder-d8334-default-rtdb.firebaseio.com/ingredients.json'
+      )
+      .then(response => {
+        setIngredients(response.data)
+      })
+      .catch(error => {
+        setError(true)
+      })
+  }, [])
 
   const updatedPurchaseable = ingredients => {
     const sum = Object.keys(ingredients)
@@ -118,14 +127,17 @@ const BurgerBuilder = () => {
     disabledInfo[key] = disabledInfo[key] <= 0
   }
 
-  let orderSummary = (
-    <OrderSummary
-      ingredients={ingredients}
-      price={totalPrice}
-      purchaseCanceled={purchaseCancelHandler}
-      purchaseContinued={purchaseContinueHandler}
-    />
-  )
+  let orderSummary = null
+  if (ingredients) {
+    orderSummary = (
+      <OrderSummary
+        ingredients={ingredients}
+        price={totalPrice}
+        purchaseCanceled={purchaseCancelHandler}
+        purchaseContinued={purchaseContinueHandler}
+      />
+    )
+  }
 
   if (loading) {
     orderSummary = <Spinner />
@@ -136,7 +148,9 @@ const BurgerBuilder = () => {
       <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         {orderSummary}
       </Modal>
-      <Burger ingredients={ingredients} />
+      {!ingredients && !error && <Spinner />}
+      {error && <p>Ingredients can't be loaded!</p>}
+      {ingredients && <Burger ingredients={ingredients} />}
       <BuildControls
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
