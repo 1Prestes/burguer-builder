@@ -7,6 +7,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 
 const INGREDIENTS_PRICES = {
   salad: 0.5,
@@ -103,12 +104,10 @@ const BurgerBuilder = () => {
       .then(response => {
         setLoading(false)
         setPurchasing(false)
-        console.log(response)
       })
       .catch(err => {
         setLoading(false)
         setPurchasing(false)
-        console.error(err)
       })
   }
 
@@ -150,4 +149,4 @@ const BurgerBuilder = () => {
   )
 }
 
-export default BurgerBuilder
+export default () => withErrorHandler(BurgerBuilder, axios)()
