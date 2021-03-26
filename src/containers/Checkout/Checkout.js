@@ -6,12 +6,18 @@ import ContactData from './ContactData/ContactData'
 
 const Checkout = props => {
   const [ingredients, setIngredients] = useState(null)
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     const query = new URLSearchParams(props.location.search)
     const ingredients = {}
+
     for (let param of query.entries()) {
-      ingredients[param[0]] = +param[1]
+      if (param[0] === 'price') {
+        setTotalPrice(param[1])
+      } else {
+        ingredients[param[0]] = +param[1]
+      }
     }
     setIngredients(ingredients)
   }, [])
@@ -34,7 +40,13 @@ const Checkout = props => {
       )}
       <Route
         path={props.match.path + '/contact-data'}
-        component={ContactData}
+        render={props => (
+          <ContactData
+            ingredients={ingredients}
+            price={totalPrice}
+            {...props}
+          />
+        )}
       />
     </div>
   )
