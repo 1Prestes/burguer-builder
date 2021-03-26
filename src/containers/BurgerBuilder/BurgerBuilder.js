@@ -16,7 +16,7 @@ const INGREDIENTS_PRICES = {
   bacon: 0.7
 }
 
-const BurgerBuilder = () => {
+const BurgerBuilder = props => {
   const [ingredients, setIngredients] = useState(null)
   const [totalPrice, setTotalPrice] = useState(4)
   const [purchaseable, setPurchaseable] = useState(false)
@@ -92,32 +92,32 @@ const BurgerBuilder = () => {
   }
 
   const purchaseContinueHandler = () => {
-    setLoading(true)
-    const order = {
-      ingredients,
-      totalPrice,
-      customer: {
-        name: 'Goku',
-        address: {
-          street: 'Any Street',
-          zipCode: '11630000',
-          country: 'Brazil'
-        },
-        email: 'any@mail.com'
-      },
-      deliveryMethod: 'fastest'
-    }
-
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        setLoading(false)
-        setPurchasing(false)
-      })
-      .catch(err => {
-        setLoading(false)
-        setPurchasing(false)
-      })
+    // setLoading(true)
+    // const order = {
+    //   ingredients,
+    //   totalPrice,
+    //   customer: {
+    //     name: 'Goku',
+    //     address: {
+    //       street: 'Any Street',
+    //       zipCode: '11630000',
+    //       country: 'Brazil'
+    //     },
+    //     email: 'any@mail.com'
+    //   },
+    //   deliveryMethod: 'fastest'
+    // }
+    // axios
+    //   .post('/orders.json', order)
+    //   .then(response => {
+    //     setLoading(false)
+    //     setPurchasing(false)
+    //   })
+    //   .catch(err => {
+    //     setLoading(false)
+    //     setPurchasing(false)
+    //   })
+    props.history.push('/checkout')
   }
 
   const disabledInfo = {
@@ -163,4 +163,4 @@ const BurgerBuilder = () => {
   )
 }
 
-export default () => withErrorHandler(BurgerBuilder, axios)()
+export default props => withErrorHandler(BurgerBuilder, axios)(props)

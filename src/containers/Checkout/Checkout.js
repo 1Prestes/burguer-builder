@@ -2,7 +2,7 @@ import React from 'react'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 
-const Checkout = () => {
+const Checkout = (props) => {
   const ingredients = {
     salad: 1,
     meat: 1,
@@ -10,9 +10,18 @@ const Checkout = () => {
     bacon: 1
   }
 
+  console.log(props)
+
+  const checkoutCancelledHandler = () => {}
+  const checkoutContinuedHandler = () => {}
+
   return (
     <div>
-      <CheckoutSummary ingredients={ingredients} />
+      <CheckoutSummary
+        ingredients={ingredients}
+        checkoutCancelled={checkoutCancelledHandler}
+        checkoutContinued={checkoutContinuedHandler}
+      />
     </div>
   )
 }
