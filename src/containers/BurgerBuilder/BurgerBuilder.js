@@ -117,7 +117,15 @@ const BurgerBuilder = props => {
     //     setLoading(false)
     //     setPurchasing(false)
     //   })
-    props.history.push('/checkout')
+    const queryParams = []
+    for (let i in ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) + '=' + encodeURIComponent(ingredients[i])
+      )
+    }
+    const queryString = queryParams.join('&')
+    console.log(queryString)
+    props.history.push({ pathname: '/checkout', search: '?' + queryString })
   }
 
   const disabledInfo = {
