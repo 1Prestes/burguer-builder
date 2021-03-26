@@ -2,7 +2,7 @@ import React from 'react'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 
-const Checkout = (props) => {
+const Checkout = props => {
   const ingredients = {
     salad: 1,
     meat: 1,
@@ -10,10 +10,12 @@ const Checkout = (props) => {
     bacon: 1
   }
 
-  console.log(props)
-
-  const checkoutCancelledHandler = () => {}
-  const checkoutContinuedHandler = () => {}
+  const checkoutCancelledHandler = () => {
+    props.history.goBack()
+  }
+  const checkoutContinuedHandler = () => {
+    props.history.replace('/checkout/contact-data')
+  }
 
   return (
     <div>
