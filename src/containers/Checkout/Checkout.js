@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { Route } from 'react-router-dom'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+import ContactData from './ContactData/ContactData'
 
 const Checkout = props => {
   const [ingredients, setIngredients] = useState(null)
@@ -30,6 +32,10 @@ const Checkout = props => {
           checkoutContinued={checkoutContinuedHandler}
         />
       )}
+      <Route
+        path={props.match.path + '/contact-data'}
+        component={ContactData}
+      />
     </div>
   )
 }
