@@ -28,10 +28,15 @@ const Orders = props => {
 
   return (
     <div>
-      <Order />
-      <Order />
+      {orders.map(order => (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={order.price}
+        />
+      ))}
     </div>
   )
 }
 
-export default (props) => withErrorHandler(Orders, axios)(props)
+export default props => withErrorHandler(Orders, axios)(props)
