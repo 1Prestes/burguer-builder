@@ -66,10 +66,15 @@ const ContactData = props => {
   const orderHandler = event => {
     event.preventDefault()
     setLoading(true)
+    const formData = {}
+    for (let formElementIdentifier in orderForm) {
+      formData[formElementIdentifier] = orderForm[formElementIdentifier].value
+    }
     const order = {
       ingredients: props.ingredients,
       price: props.price,
-      deliveryMethod: 'fastest'
+      deliveryMethod: 'fastest',
+      orderData: formData
     }
     axios
       .post('/orders.json', order)
@@ -101,7 +106,7 @@ const ContactData = props => {
   }
 
   let form = (
-    <form>
+    <form onSubmit={orderHandler}>
       {formElementsArray.map(formElement => (
         <Input
           key={formElement.id}
