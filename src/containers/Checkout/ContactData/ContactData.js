@@ -8,14 +8,59 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 import classes from './ContactData.css'
 
 const ContactData = props => {
-  const [contact, setContact] = useState({
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: ''
+  const [orderForm, setOrderForm] = useState({
+    name: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Your Name'
+      },
+      value: ''
+    },
+    street: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Street'
+      },
+      value: ''
+    },
+    zipCode: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'ZIP Code'
+      },
+      value: ''
+    },
+    country: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Country'
+      },
+      value: ''
+    },
+    email: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'email',
+        placeholder: 'Your E-mail'
+      },
+      value: ''
+    },
+    deliveryMethod: {
+      elementType: 'select',
+      elementConfig: {
+        options: [
+          { value: 'fastest', displayValue: 'Fastest' },
+          { value: 'cheapest', displayValue: 'Cheapest' }
+        ]
+      },
+      value: ''
     }
   })
+
   const [loading, setLoading] = useState(false)
 
   const orderHandler = event => {
@@ -24,15 +69,6 @@ const ContactData = props => {
     const order = {
       ingredients: props.ingredients,
       price: props.price,
-      customer: {
-        name: 'Goku',
-        address: {
-          street: 'Any Street',
-          zipCode: '11630000',
-          country: 'Brazil'
-        },
-        email: 'any@mail.com'
-      },
       deliveryMethod: 'fastest'
     }
     axios
@@ -48,25 +84,10 @@ const ContactData = props => {
 
   let form = (
     <form>
-      <Input
-        inputtype='input'
-        type='text'
-        name='name'
-        placeholder='Your Name'
-      />
-      <Input
-        inputtype='input'
-        type='email'
-        name='email'
-        placeholder='Your E-mail'
-      />
-      <Input inputtype='input' type='text' name='street' placeholder='Street' />
-      <Input
-        inputtype='input'
-        type='text'
-        name='postal'
-        placeholder='Postal Code'
-      />
+      <Input elementType="..." />
+      <Input elementType="..." />
+      <Input elementType="..." />
+      <Input elementType="..." />
       <Button btnType='Success' clicked={orderHandler}>
         ORDER
       </Button>
