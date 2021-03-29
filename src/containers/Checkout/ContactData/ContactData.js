@@ -19,7 +19,8 @@ const ContactData = props => {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     street: {
       elementType: 'input',
@@ -31,7 +32,8 @@ const ContactData = props => {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     zipCode: {
       elementType: 'input',
@@ -45,7 +47,8 @@ const ContactData = props => {
         minLength: 8,
         maxLength: 8
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     country: {
       elementType: 'input',
@@ -57,7 +60,8 @@ const ContactData = props => {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     email: {
       elementType: 'input',
@@ -69,7 +73,8 @@ const ContactData = props => {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     deliveryMethod: {
       elementType: 'select',
@@ -148,6 +153,7 @@ const ContactData = props => {
       updateFormElement.value,
       updateFormElement.validation
     )
+    updateFormElement.touched = true
     updateOrderForm[inputIdentifier] = updateFormElement
     console.log(updateFormElement)
     setOrderForm({ ...updateOrderForm })
@@ -161,6 +167,9 @@ const ContactData = props => {
           elementType={formElement.config.elementType}
           elementConfig={formElement.config.elementConfig}
           value={formElement.config.value}
+          invalid={!formElement.config.valid}
+          shouldValidate={formElement.config.validation}
+          touched={formElement.config.touched}
           changed={event => inputChangedHandler(event, formElement.id)}
         />
       ))}
