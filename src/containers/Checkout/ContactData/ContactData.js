@@ -41,11 +41,11 @@ const ContactData = props => {
       },
       value: '',
       validation: {
-        required: true
+        required: true,
+        minLength: 8,
+        maxLength: 8
       },
-      valid: false,
-      minLength: 9,
-      maxLength: 9
+      valid: false
     },
     country: {
       elementType: 'input',
@@ -119,17 +119,21 @@ const ContactData = props => {
   }
 
   const checkValidity = (value, rules) => {
-    let isValid = false
-
+    let isValid = true
+    console.log(rules)
     if (rules.required) {
-      isValid = value.trim() !== ''
+      isValid = value.trim() !== '' && isValid
+      // console.log(isValid)
     }
 
     if (rules.minLength) {
-      isValid = value.length >= rules.minLength
+      isValid = value.length >= rules.minLength && isValid
+      console.log(isValid)
     }
+
     if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength
+      isValid = value.length <= rules.maxLength && isValid
+      console.log(isValid)
     }
 
     return isValid
