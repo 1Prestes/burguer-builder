@@ -91,6 +91,15 @@ const ContactData = props => {
     })
   }
 
+  const inputChangedHandler = (event, inputIdentifier) => {
+    const updateOrderForm = { ...orderForm }
+    const updateFormElement = { ...updateOrderForm[inputIdentifier] }
+
+    updateFormElement.value = event.target.value
+    updateOrderForm[inputIdentifier] = updateFormElement
+    setOrderForm({ ...updateOrderForm })
+  }
+
   let form = (
     <form>
       {formElementsArray.map(formElement => (
@@ -99,6 +108,7 @@ const ContactData = props => {
           elementType={formElement.config.elementType}
           elementConfig={formElement.config.elementConfig}
           value={formElement.config.value}
+          changed={event => inputChangedHandler(event, formElement.id)}
         />
       ))}
       <Button btnType='Success' clicked={orderHandler}>
