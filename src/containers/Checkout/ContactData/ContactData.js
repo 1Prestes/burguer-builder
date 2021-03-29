@@ -15,7 +15,11 @@ const ContactData = props => {
         type: 'text',
         placeholder: 'Your Name'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     street: {
       elementType: 'input',
@@ -23,7 +27,11 @@ const ContactData = props => {
         type: 'text',
         placeholder: 'Street'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     zipCode: {
       elementType: 'input',
@@ -31,7 +39,13 @@ const ContactData = props => {
         type: 'text',
         placeholder: 'ZIP Code'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false,
+      minLength: 9,
+      maxLength: 9
     },
     country: {
       elementType: 'input',
@@ -39,7 +53,11 @@ const ContactData = props => {
         type: 'text',
         placeholder: 'Country'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     email: {
       elementType: 'input',
@@ -47,7 +65,11 @@ const ContactData = props => {
         type: 'email',
         placeholder: 'Your E-mail'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     deliveryMethod: {
       elementType: 'select',
@@ -96,12 +118,34 @@ const ContactData = props => {
     })
   }
 
+  const checkValidity = (value, rules) => {
+    let isValid = false
+
+    if (rules.required) {
+      isValid = value.trim() !== ''
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength
+    }
+
+    return isValid
+  }
+
   const inputChangedHandler = (event, inputIdentifier) => {
     const updateOrderForm = { ...orderForm }
     const updateFormElement = { ...updateOrderForm[inputIdentifier] }
 
     updateFormElement.value = event.target.value
+    updateFormElement.valid = checkValidity(
+      updateFormElement.value,
+      updateFormElement.validation
+    )
     updateOrderForm[inputIdentifier] = updateFormElement
+    console.log(updateFormElement)
     setOrderForm({ ...updateOrderForm })
   }
 
