@@ -84,9 +84,13 @@ const ContactData = props => {
           { value: 'cheapest', displayValue: 'Cheapest' }
         ]
       },
-      value: ''
+      value: '',
+      validation: {},
+      valid: true
     }
   })
+
+  const [formIsValid, setFormIsValid] = useState(false)
 
   const [loading, setLoading] = useState(false)
 
@@ -125,20 +129,21 @@ const ContactData = props => {
 
   const checkValidity = (value, rules) => {
     let isValid = true
-    console.log(rules)
+
+    if (!rules) {
+      return true
+    }
+
     if (rules.required) {
       isValid = value.trim() !== '' && isValid
-      // console.log(isValid)
     }
 
     if (rules.minLength) {
       isValid = value.length >= rules.minLength && isValid
-      console.log(isValid)
     }
 
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid
-      console.log(isValid)
     }
 
     return isValid
@@ -155,7 +160,14 @@ const ContactData = props => {
     )
     updateFormElement.touched = true
     updateOrderForm[inputIdentifier] = updateFormElement
-    console.log(updateFormElement)
+
+    let formIsValid = true
+
+    for (let inputIdentifier in updateOrderForm) {
+      formIsValid = updateOrderForm[inputIdentifier].valid && formIsValid
+    }
+
+    setFormIsValid(formIsValid)
     setOrderForm({ ...updateOrderForm })
   }
 
@@ -173,7 +185,7 @@ const ContactData = props => {
           changed={event => inputChangedHandler(event, formElement.id)}
         />
       ))}
-      <Button btnType='Success' clicked={orderHandler}>
+      <Button btnType='Success' clicked={orderHandler} disabled={!formIsValid}>
         ORDER
       </Button>
     </form>
