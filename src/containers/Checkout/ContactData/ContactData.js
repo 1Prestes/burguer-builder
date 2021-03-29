@@ -82,12 +82,25 @@ const ContactData = props => {
       })
   }
 
+  const formElementsArray = []
+
+  for (let key in orderForm) {
+    formElementsArray.push({
+      id: key,
+      config: orderForm[key]
+    })
+  }
+
   let form = (
     <form>
-      <Input elementType="..." />
-      <Input elementType="..." />
-      <Input elementType="..." />
-      <Input elementType="..." />
+      {formElementsArray.map(formElement => (
+        <Input
+          key={formElement.id}
+          elementType={formElement.config.elementType}
+          elementConfig={formElement.config.elementConfig}
+          value={formElement.config.value}
+        />
+      ))}
       <Button btnType='Success' clicked={orderHandler}>
         ORDER
       </Button>
