@@ -6,7 +6,7 @@ import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 
 const Orders = props => {
   const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios
@@ -18,11 +18,11 @@ const Orders = props => {
           fetchOrders.push({ ...response.data[key], id: key })
         }
         setOrders(fetchOrders)
-        setLoading(false)
+        // setLoading(false)
       })
       .catch(error => {
         console.error(error)
-        setLoading(false)
+        // setLoading(false)
       })
   }, [])
 

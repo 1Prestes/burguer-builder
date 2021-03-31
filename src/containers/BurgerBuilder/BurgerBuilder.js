@@ -21,7 +21,7 @@ const BurgerBuilder = props => {
   const [totalPrice, setTotalPrice] = useState(4)
   const [purchaseable, setPurchaseable] = useState(false)
   const [purchasing, setPurchasing] = useState(false)
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
   useEffect(() => {
@@ -122,9 +122,9 @@ const BurgerBuilder = props => {
     )
   }
 
-  if (loading) {
-    orderSummary = <Spinner />
-  }
+  // if (loading) {
+  //   orderSummary = <Spinner />
+  // }
 
   return (
     <Aux>
