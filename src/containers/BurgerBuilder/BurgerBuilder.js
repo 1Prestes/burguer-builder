@@ -11,12 +11,12 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 import * as actionTypes from '../../store/actions'
 
-const INGREDIENTS_PRICES = {
-  salad: 0.5,
-  cheese: 0.4,
-  meat: 1.3,
-  bacon: 0.7
-}
+// const INGREDIENTS_PRICES = {
+//   salad: 0.5,
+//   cheese: 0.4,
+//   meat: 1.3,
+//   bacon: 0.7
+// }
 
 const BurgerBuilder = props => {
   // const [ingredients, setIngredients] = useState(null)
@@ -100,7 +100,7 @@ const BurgerBuilder = props => {
         encodeURIComponent(i) + '=' + encodeURIComponent(props.ings[i])
       )
     }
-    queryParams.push('price=' + totalPrice)
+    queryParams.push('price=' + props.price)
     const queryString = queryParams.join('&')
     props.history.push({ pathname: '/checkout', search: '?' + queryString })
   }
@@ -117,7 +117,7 @@ const BurgerBuilder = props => {
     orderSummary = (
       <OrderSummary
         ingredients={props.ings}
-        price={totalPrice}
+        price={props.price}
         purchaseCanceled={purchaseCancelHandler}
         purchaseContinued={purchaseContinueHandler}
       />
@@ -142,14 +142,14 @@ const BurgerBuilder = props => {
         disabled={disabledInfo}
         purchaseable={purchaseable}
         ordered={purchaseHandler}
-        price={totalPrice}
+        price={props.price}
       />
     </Aux>
   )
 }
 
 const mapStateToProps = state => {
-  return { ings: state.ingredients }
+  return { ings: state.ingredients, price: state.totalPrice }
 }
 
 const mapDispatchToProps = dispatch => {
