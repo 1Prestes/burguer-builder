@@ -94,15 +94,15 @@ const BurgerBuilder = props => {
   }
 
   const purchaseContinueHandler = () => {
-    const queryParams = []
-    for (let i in props.ings) {
-      queryParams.push(
-        encodeURIComponent(i) + '=' + encodeURIComponent(props.ings[i])
-      )
-    }
-    queryParams.push('price=' + props.price)
-    const queryString = queryParams.join('&')
-    props.history.push({ pathname: '/checkout', search: '?' + queryString })
+    // const queryParams = []
+    // for (let i in props.ings) {
+    //   queryParams.push(
+    //     encodeURIComponent(i) + '=' + encodeURIComponent(props.ings[i])
+    //   )
+    // }
+    // queryParams.push('price=' + props.price)
+    // const queryString = queryParams.join('&')
+    props.history.push('/checkout')
   }
 
   const disabledInfo = {
@@ -171,4 +171,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(props => withErrorHandler(BurgerBuilder, axios)(props))
-// export default connect(mapStateToProps, mapDispatchToProps)(WithErrorHandler(BurgerBuilder,api));

@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import ContactData from './ContactData/ContactData'
 
 const Checkout = props => {
-  const [ingredients, setIngredients] = useState(null)
-  const [totalPrice, setTotalPrice] = useState(0)
-
-  useEffect(() => {
-    const query = new URLSearchParams(props.location.search)
-    const ingredients = {}
-
-    for (let param of query.entries()) {
-      if (param[0] === 'price') {
-        setTotalPrice(param[1])
-      } else {
-        ingredients[param[0]] = +param[1]
-      }
-    }
-    setIngredients(ingredients)
-  }, [])
-
   const checkoutCancelledHandler = () => {
     props.history.goBack()
   }
@@ -31,25 +15,25 @@ const Checkout = props => {
 
   return (
     <div>
-      {ingredients && (
+      {props.ings && (
         <CheckoutSummary
-          ingredients={ingredients}
+          ingredients={props.ings}
           checkoutCancelled={checkoutCancelledHandler}
           checkoutContinued={checkoutContinuedHandler}
         />
       )}
       <Route
         path={props.match.path + '/contact-data'}
-        render={props => (
-          <ContactData
-            ingredients={ingredients}
-            price={totalPrice}
-            {...props}
-          />
-        )}
+        component={ContactData}
       />
     </div>
   )
 }
 
-export default Checkout
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients
+  }
+}
+
+export default connect(mapStateToProps)(Checkout)

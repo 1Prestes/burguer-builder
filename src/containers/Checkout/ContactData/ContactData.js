@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 
 import axios from '../../../axios-orders'
-
 import Button from '../../../components/UI/Button/Button'
 import Input from '../../../components/UI/Input/Input'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -102,7 +102,7 @@ const ContactData = props => {
       formData[formElementIdentifier] = orderForm[formElementIdentifier].value
     }
     const order = {
-      ingredients: props.ingredients,
+      ingredients: props.ings,
       price: props.price,
       deliveryMethod: 'fastest',
       orderData: formData
@@ -203,4 +203,11 @@ const ContactData = props => {
   )
 }
 
-export default ContactData
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  }
+}
+
+export default connect(mapStateToProps)(ContactData)
