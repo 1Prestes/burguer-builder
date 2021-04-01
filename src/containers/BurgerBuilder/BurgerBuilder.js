@@ -24,18 +24,18 @@ const BurgerBuilder = props => {
   // const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
-  useEffect(() => {
-    axios
-      .get(
-        'https://burger-builder-d8334-default-rtdb.firebaseio.com/ingredients.json'
-      )
-      .then(response => {
-        setIngredients(response.data)
-      })
-      .catch(error => {
-        setError(true)
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       'https://burger-builder-d8334-default-rtdb.firebaseio.com/ingredients.json'
+  //     )
+  //     .then(response => {
+  //       setIngredients(response.data)
+  //     })
+  //     .catch(error => {
+  //       setError(true)
+  //     })
+  // }, [])
 
   const updatedPurchaseable = ingredients => {
     const sum = Object.keys(ingredients)
