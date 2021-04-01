@@ -20,8 +20,8 @@ import * as actionTypes from '../../store/actions'
 
 const BurgerBuilder = props => {
   // const [ingredients, setIngredients] = useState(null)
-  const [totalPrice, setTotalPrice] = useState(4)
-  const [purchaseable, setPurchaseable] = useState(false)
+  // const [totalPrice, setTotalPrice] = useState(4)
+  // const [purchaseable, setPurchaseable] = useState(false)
   const [purchasing, setPurchasing] = useState(false)
   // const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -45,7 +45,7 @@ const BurgerBuilder = props => {
       .reduce((sum, el) => {
         return sum + el
       }, 0)
-    setPurchaseable(sum > 0)
+    return sum > 0
   }
 
   // const addIngredientHandler = type => {
@@ -140,7 +140,7 @@ const BurgerBuilder = props => {
         ingredientAdded={props.onIngredientAdded}
         ingredientRemoved={props.onIngredientRemove}
         disabled={disabledInfo}
-        purchaseable={purchaseable}
+        purchaseable={updatedPurchaseable(props.ings)}
         ordered={purchaseHandler}
         price={props.price}
       />
