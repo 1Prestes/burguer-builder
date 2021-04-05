@@ -9,7 +9,10 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import ingredientsReducer from './store/reducer'
 
-const store = createStore(ingredientsReducer)
+const store = createStore(
+  ingredientsReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 const app = (
   <Provider store={store}>
