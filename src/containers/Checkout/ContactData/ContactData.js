@@ -5,7 +5,9 @@ import axios from '../../../axios-orders'
 import Button from '../../../components/UI/Button/Button'
 import Input from '../../../components/UI/Input/Input'
 import Spinner from '../../../components/UI/Spinner/Spinner'
+import WithErrorHandler from '../../../withErrorHandler/withErrorHandler'
 import classes from './ContactData.css'
+import * as actions from '../../../store/actions/'
 
 const ContactData = props => {
   const [orderForm, setOrderForm] = useState({
@@ -96,17 +98,18 @@ const ContactData = props => {
 
   const orderHandler = event => {
     event.preventDefault()
-    setLoading(true)
+
     const formData = {}
     for (let formElementIdentifier in orderForm) {
       formData[formElementIdentifier] = orderForm[formElementIdentifier].value
     }
-    // const order = {
-    //   ingredients: props.ings,
-    //   price: props.price,
-    //   deliveryMethod: 'fastest',
-    //   orderData: formData
-    // }
+    const order = {
+      ingredients: props.ings,
+      price: props.price,
+      orderData: formData
+    }
+    
+    props.onOrderBurger(order)
   }
 
   const formElementsArray = []
@@ -201,4 +204,13 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => {
+  return {
+    onOrderBurger: orderData => dispatch(actions.purchaseBurgerStart(orderData))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(() => WithErrorHandler(ContactData, axios))
