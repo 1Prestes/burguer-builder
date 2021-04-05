@@ -6,10 +6,10 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 import * as burgerBuilderActions from '../../store/actions/'
+import axios from '../../axios-orders'
 
 // const INGREDIENTS_PRICES = {
 //   salad: 0.5,
@@ -24,22 +24,12 @@ const BurgerBuilder = props => {
   // const [purchaseable, setPurchaseable] = useState(false)
   const [purchasing, setPurchasing] = useState(false)
   // const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  // const [error, setError] = useState(false)
 
-  useEffect(() => {
-    axios
-      .get(
-        'https://burger-builder-d8334-default-rtdb.firebaseio.com/ingredients.json'
-      )
-      .then(response => {
-        // setIngredients(response.data)
-      })
-      .catch(error => {
-        setError(true)
-      })
-  }, [])
+  useEffect(() => {}, [])
 
   const updatedPurchaseable = ingredients => {
+    if (ingredients === null) return 0
     const sum = Object.keys(ingredients)
       .map(igKey => ingredients[igKey])
       .reduce((sum, el) => {
@@ -133,8 +123,8 @@ const BurgerBuilder = props => {
       <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         {orderSummary}
       </Modal>
-      {!props.ings && !error && <Spinner />}
-      {error && <p>Ingredients can't be loaded!</p>}
+      {!props.ings && !props.error && <Spinner />}
+      {props.error && <p>Ingredients can't be loaded!</p>}
       {props.ings && <Burger ingredients={props.ings} />}
       <BuildControls
         ingredientAdded={props.onIngredientAdded}
