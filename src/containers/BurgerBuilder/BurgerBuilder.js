@@ -26,7 +26,9 @@ const BurgerBuilder = props => {
   // const [loading, setLoading] = useState(false)
   // const [error, setError] = useState(false)
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    props.onInitIngredients()
+  }, [])
 
   const updatedPurchaseable = ingredients => {
     if (ingredients === null) return 0
@@ -139,7 +141,11 @@ const BurgerBuilder = props => {
 }
 
 const mapStateToProps = state => {
-  return { ings: state.ingredients, price: state.totalPrice }
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+    error: state.error
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -147,7 +153,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingName =>
       dispatch(burgerBuilderActions.addIngredient(ingName)),
     onIngredientRemove: ingName =>
-      dispatch(burgerBuilderActions.removeIngredient(ingName))
+      dispatch(burgerBuilderActions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
   }
 }
 
