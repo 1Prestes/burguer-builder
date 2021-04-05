@@ -94,8 +94,6 @@ const ContactData = props => {
 
   const [formIsValid, setFormIsValid] = useState(false)
 
-  const [loading, setLoading] = useState(false)
-
   const orderHandler = event => {
     event.preventDefault()
 
@@ -108,7 +106,7 @@ const ContactData = props => {
       price: props.price,
       orderData: formData
     }
-    
+
     props.onOrderBurger(order)
   }
 
@@ -185,7 +183,7 @@ const ContactData = props => {
     </form>
   )
 
-  if (loading) {
+  if (props.loading) {
     form = <Spinner />
   }
 
@@ -200,13 +198,14 @@ const ContactData = props => {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    loading: state.loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: orderData => dispatch(actions.purchaseBurgerStart(orderData))
+    onOrderBurger: orderData => dispatch(actions.purchaseBurger(orderData))
   }
 }
 
