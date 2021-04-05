@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import ingredientsReducer from './store/reducer'
+import ingredientsReducer from './store/reducers/burgerBuilder'
 
 const store = createStore(
   ingredientsReducer,
