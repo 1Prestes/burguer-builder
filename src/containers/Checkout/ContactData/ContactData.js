@@ -101,21 +101,12 @@ const ContactData = props => {
     for (let formElementIdentifier in orderForm) {
       formData[formElementIdentifier] = orderForm[formElementIdentifier].value
     }
-    const order = {
-      ingredients: props.ings,
-      price: props.price,
-      deliveryMethod: 'fastest',
-      orderData: formData
-    }
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        setLoading(false)
-        props.history.push('/')
-      })
-      .catch(err => {
-        setLoading(false)
-      })
+    // const order = {
+    //   ingredients: props.ings,
+    //   price: props.price,
+    //   deliveryMethod: 'fastest',
+    //   orderData: formData
+    // }
   }
 
   const formElementsArray = []
