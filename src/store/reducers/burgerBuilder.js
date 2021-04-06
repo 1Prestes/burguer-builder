@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
+import { updateObject } from '../utility'
 
 const initialState = {
   ingredients: null,
@@ -15,26 +16,32 @@ const INGREDIENTS_PRICES = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-        },
+      const updateIngredient = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+      }
+      const updatedIngredients = updateObject(
+        state.ingredients,
+        updateIngredient
+      )
+      const updatedState = {
+        ingredients: updatedIngredients,
         totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
       }
+      return updateObject(state, updatedState)
+
     case actionTypes.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-        },
-        totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName]
+      const updateIng = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] - 1
       }
+      const updatedIngs = updateObject(state.ingredients, updateIng)
+      const updatedSt = {
+        ingredients: updatedIngs,
+        totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
+      }
+      return updateObject(state, updatedSt)
+
     case actionTypes.SET_INGREDIENTS:
-      return {
-        ...state,
+      return updateObject(state, {
         ingredients: {
           salad: action.ingredients.salad,
           bacon: action.ingredients.bacon,
@@ -43,12 +50,13 @@ const reducer = (state = initialState, action) => {
         },
         totalPrice: 4,
         error: false
-      }
+      })
+
     case actionTypes.FETCH_INGREDIENTS_FAILED:
-      return {
-        ...state,
+      return updateObject(...state, {
         error: true
-      }
+      })
+
     default:
       return state
   }
