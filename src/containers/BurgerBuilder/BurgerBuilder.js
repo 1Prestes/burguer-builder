@@ -8,7 +8,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../withErrorHandler/withErrorHandler'
-import * as burgerBuilderActions from '../../store/actions/'
+import * as actions from '../../store/actions/'
 import axios from '../../axios-orders'
 
 // const INGREDIENTS_PRICES = {
@@ -94,6 +94,7 @@ const BurgerBuilder = props => {
     // }
     // queryParams.push('price=' + props.price)
     // const queryString = queryParams.join('&')
+    props.onInitPurchase()
     props.history.push('/checkout')
   }
 
@@ -151,10 +152,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingName =>
-      dispatch(burgerBuilderActions.addIngredient(ingName)),
+      dispatch(actions.addIngredient(ingName)),
     onIngredientRemove: ingName =>
-      dispatch(burgerBuilderActions.removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+      dispatch(actions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   }
 }
 

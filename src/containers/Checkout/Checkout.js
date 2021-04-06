@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import ContactData from './ContactData/ContactData'
+import * as actions from '../../store/actions'
 
 const Checkout = props => {
+
   const checkoutCancelledHandler = () => {
     props.history.goBack()
   }
@@ -16,9 +18,11 @@ const Checkout = props => {
   let summary = <Redirect to='/' />
 
   if (props.ings) {
-    console.log(props.match.path + '/contact-data')
+    const purchasedRedirect = props.purchased ? <Redirect to='/' /> : null
+
     summary = (
-      <div>
+      <React.Fragment>
+        {purchasedRedirect}
         <CheckoutSummary
           ingredients={props.ings}
           checkoutCancelled={checkoutCancelledHandler}
@@ -29,7 +33,7 @@ const Checkout = props => {
           path={props.match.path + '/contact-data'}
           component={ContactData}
         />
-      </div>
+      </React.Fragment>
     )
   }
 
@@ -38,7 +42,8 @@ const Checkout = props => {
 
 const mapStateToProps = state => {
   return {
-    ings: state.burgerBuilder.ingredients
+    ings: state.burgerBuilder.ingredients,
+    purchased: state.order.purchased
   }
 }
 
