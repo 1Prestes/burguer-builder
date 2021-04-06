@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
+import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions'
 import classes from './Auth.css'
 
@@ -110,8 +111,10 @@ const Auth = props => {
 
   return (
     <div className={classes.Auth}>
+      {props.error && <p>{props.error.message}</p>}
       <form onSubmit={submitHandler}>
-        {form}
+        {props.loading && <Spinner />}
+        {!props.loading && form}
         <Button btnType='Success'>SUBMIT</Button>
       </form>
       <Button clicked={switchAuthModeHandler} btnType='Danger'>
@@ -121,6 +124,13 @@ const Auth = props => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp) =>
@@ -128,4 +138,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
