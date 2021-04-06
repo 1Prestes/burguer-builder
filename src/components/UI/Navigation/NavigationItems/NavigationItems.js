@@ -12,6 +12,9 @@ const NavigationItems = props => (
     <NavigationItem link='/orders' exact={props.exact}>
       Orders
     </NavigationItem>
+    <NavigationItem link='/auth' exact={props.exact}>
+      Authenticate
+    </NavigationItem>
   </ul>
 )
 
