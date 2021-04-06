@@ -107,7 +107,7 @@ const ContactData = props => {
       orderData: formData
     }
 
-    props.onOrderBurger(order)
+    props.onOrderBurger(order, props.token)
   }
 
   const formElementsArray = []
@@ -199,13 +199,14 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: orderData => dispatch(actions.purchaseBurger(orderData))
+    onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
   }
 }
 
