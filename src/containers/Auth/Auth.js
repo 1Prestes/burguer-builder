@@ -7,6 +7,7 @@ import * as actions from '../../store/actions'
 import classes from './Auth.css'
 
 const Auth = props => {
+  const [isSignup, setIsSignup] = useState(true)
   const [controls, setControls] = useState({
     email: {
       elementType: 'input',
@@ -76,9 +77,13 @@ const Auth = props => {
     setControls({ ...updatedControls })
   }
 
+  const switchAuthModeHandler = () => {
+    setIsSignup(!isSignup)
+  }
+
   const submitHandler = event => {
     event.preventDefault()
-    props.onAuth(controls.email.value, controls.password.value)
+    props.onAuth(controls.email.value, controls.password.value, isSignup)
   }
 
   const formElementsArray = []
@@ -109,13 +114,17 @@ const Auth = props => {
         {form}
         <Button btnType='Success'>SUBMIT</Button>
       </form>
+      <Button clicked={switchAuthModeHandler} btnType='Danger'>
+        SWITCH TO SIGN-IN {isSignup ? 'SIGN-IN' : 'SIGN-UP'}
+      </Button>
     </div>
   )
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password))
+    onAuth: (email, password, isSignUp) =>
+      dispatch(actions.auth(email, password, isSignUp))
   }
 }
 
