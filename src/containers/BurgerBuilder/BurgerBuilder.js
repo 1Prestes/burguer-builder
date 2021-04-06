@@ -32,6 +32,8 @@ const BurgerBuilder = props => {
 
   const updatedPurchaseable = ingredients => {
     if (ingredients === null) return 0
+    if (ingredients === undefined) return 0
+
     const sum = Object.keys(ingredients)
       .map(igKey => ingredients[igKey])
       .reduce((sum, el) => {
@@ -135,7 +137,7 @@ const BurgerBuilder = props => {
         disabled={disabledInfo}
         purchaseable={updatedPurchaseable(props.ings)}
         ordered={purchaseHandler}
-        price={props.price}
+        price={props.price || 0}
       />
     </Aux>
   )
@@ -151,10 +153,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: ingName =>
-      dispatch(actions.addIngredient(ingName)),
-    onIngredientRemove: ingName =>
-      dispatch(actions.removeIngredient(ingName)),
+    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemove: ingName => dispatch(actions.removeIngredient(ingName)),
     onInitIngredients: () => dispatch(actions.initIngredients()),
     onInitPurchase: () => dispatch(actions.purchaseInit())
   }
