@@ -14,27 +14,31 @@ const Checkout = props => {
   }
 
   let summary = <Redirect to='/' />
+
   if (props.ings) {
+    console.log(props.match.path + '/contact-data')
     summary = (
-      <React.Fragment>
+      <div>
         <CheckoutSummary
           ingredients={props.ings}
           checkoutCancelled={checkoutCancelledHandler}
           checkoutContinued={checkoutContinuedHandler}
         />
+
         <Route
           path={props.match.path + '/contact-data'}
           component={ContactData}
         />
-      </React.Fragment>
+      </div>
     )
   }
+
   return summary
 }
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.burgerBuilder.ingredients
   }
 }
 

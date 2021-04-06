@@ -86,7 +86,7 @@ const ContactData = props => {
           { value: 'cheapest', displayValue: 'Cheapest' }
         ]
       },
-      value: '',
+      value: 'fastest',
       validation: {},
       valid: true
     }
@@ -197,9 +197,9 @@ const ContactData = props => {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
-    loading: state.loading
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.order.loading
   }
 }
 
@@ -212,4 +212,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(() => WithErrorHandler(ContactData, axios))
+)(props => WithErrorHandler(ContactData, axios)(props))
