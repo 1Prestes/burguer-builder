@@ -8,6 +8,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 import WithErrorHandler from '../../../withErrorHandler/withErrorHandler'
 import classes from './ContactData.css'
 import * as actions from '../../../store/actions/'
+import { updateObject } from '../../../shared/utility'
 
 const ContactData = props => {
   const [orderForm, setOrderForm] = useState({
@@ -143,16 +144,18 @@ const ContactData = props => {
   }
 
   const inputChangedHandler = (event, inputIdentifier) => {
-    const updateOrderForm = { ...orderForm }
-    const updateFormElement = { ...updateOrderForm[inputIdentifier] }
+    const updateFormElement = updateObject(orderForm[inputIdentifier], {
+      value: event.target.value,
+      valid: checkValidity(
+        event.target.value,
+        orderForm[inputIdentifier].validation
+      ),
+      touched: true
+    })
 
-    updateFormElement.value = event.target.value
-    updateFormElement.valid = checkValidity(
-      updateFormElement.value,
-      updateFormElement.validation
-    )
-    updateFormElement.touched = true
-    updateOrderForm[inputIdentifier] = updateFormElement
+    const updateOrderForm = updateObject(orderForm, {
+      [inputIdentifier]: updateFormElement
+    })
 
     let formIsValid = true
 
