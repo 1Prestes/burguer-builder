@@ -8,9 +8,17 @@ import NavigationItem from './NavigationItem/NavigationItem'
 configure({ adapter: new Adapter() })
 
 describe('<NavigationItems />', () => {
-  it('should return public routes if not then authenticated', () => {
-    const wrapper = shallow(<NavigationItems />)
+  let wrapper
+  beforeEach(() => {
+    wrapper = shallow(<NavigationItems />)
+  })
 
+  it('should return two public routes if not then authenticated', () => {
     expect(wrapper.find(NavigationItem)).toHaveLength(2)
+  })
+
+  it('should return three routes if then authenticated', () => {
+    wrapper.setProps({ isAuthenticated: true })
+    expect(wrapper.find(NavigationItem)).toHaveLength(3)
   })
 })
