@@ -80,7 +80,11 @@ const BurgerBuilder = props => {
   // }
 
   const purchaseHandler = () => {
-    setPurchasing(true)
+    if (props.isAuthenticated) {
+      setPurchasing(true)
+    } else {
+      props.history.push('/auth')
+    }
   }
 
   const purchaseCancelHandler = () => {
@@ -137,6 +141,7 @@ const BurgerBuilder = props => {
         disabled={disabledInfo}
         purchaseable={updatedPurchaseable(props.ings)}
         ordered={purchaseHandler}
+        isAuth={props.isAuthenticated}
         price={props.price || 0}
       />
     </Aux>
@@ -147,7 +152,8 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null
   }
 }
 

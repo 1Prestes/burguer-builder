@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
@@ -111,6 +112,7 @@ const Auth = props => {
 
   return (
     <div className={classes.Auth}>
+      {props.isAuthenticated && <Redirect to='/' />}
       {props.error && <p>{props.error.message}</p>}
       <form onSubmit={submitHandler}>
         {props.loading && <Spinner />}
@@ -127,7 +129,8 @@ const Auth = props => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null
   }
 }
 

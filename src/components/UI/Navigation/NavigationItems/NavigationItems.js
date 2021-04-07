@@ -6,9 +6,11 @@ import classes from './NavigationItems.css'
 
 const NavigationItems = props => (
   <ul className={classes.NavigationItems}>
-    <NavigationItem link='/' exact>
-      Burger Builder
-    </NavigationItem>
+    {props.isAuthenticated ? (
+      <NavigationItem link='/' exact>
+        Burger Builder
+      </NavigationItem>
+    ) : null}
     <NavigationItem link='/orders' exact={props.exact}>
       Orders
     </NavigationItem>
