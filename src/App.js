@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Layout from './hoc/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
@@ -7,8 +8,13 @@ import Checkout from './containers/Checkout/Checkout'
 import Orders from './containers/Orders/Orders'
 import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
+import * as actions from './store/actions'
 
-const App = () => {
+const App = props => {
+  useEffect(() => {
+    props.onTryAutoSignup()
+  }, [])
+
   return (
     <div>
       <Layout>
@@ -24,4 +30,10 @@ const App = () => {
   )
 }
 
-export default App
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

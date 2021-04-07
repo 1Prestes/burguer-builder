@@ -6,14 +6,14 @@ import classes from './NavigationItems.css'
 
 const NavigationItems = props => (
   <ul className={classes.NavigationItems}>
+    <NavigationItem link='/' exact>
+      Burger Builder
+    </NavigationItem>
     {props.isAuthenticated ? (
-      <NavigationItem link='/' exact>
-        Burger Builder
+      <NavigationItem link='/orders' exact={props.exact}>
+        Orders
       </NavigationItem>
     ) : null}
-    <NavigationItem link='/orders' exact={props.exact}>
-      Orders
-    </NavigationItem>
     {!props.isAuthenticated ? (
       <NavigationItem link='/auth' exact={props.exact}>
         Authenticate
