@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
@@ -40,6 +40,12 @@ const Auth = props => {
       touched: false
     }
   })
+
+  useEffect(() => {
+    if (!props.buildingBurger && props.authRedirectPath !== '/') {
+      props.setAuthRedirectPath()
+    }
+  }, [])
 
   const checkValidity = (value, rules) => {
     let isValid = true
@@ -112,7 +118,7 @@ const Auth = props => {
 
   return (
     <div className={classes.Auth}>
-      {props.isAuthenticated && <Redirect to='/' />}
+      {props.isAuthenticated && <Redirect to={props.authRedirectPath} />}
       {props.error && <p>{props.error.message}</p>}
       <form onSubmit={submitHandler}>
         {props.loading && <Spinner />}
@@ -130,14 +136,17 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    buildingBurger: state.burgerBuilder.building,
+    authRedirectPath: state.auth.authRedirectPath
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp) =>
-      dispatch(actions.auth(email, password, isSignUp))
+      dispatch(actions.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: path => dispatch(actions.setAuthRedirectPath(path))
   }
 }
 
