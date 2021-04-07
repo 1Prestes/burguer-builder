@@ -98,6 +98,9 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^3.0.4"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "git-commit-msg-linter": "^3.0.4",
+    "react-test-renderer": "^17.0.2"
   }
 }
