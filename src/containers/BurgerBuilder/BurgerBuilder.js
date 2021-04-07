@@ -11,7 +11,7 @@ import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 import * as actions from '../../store/actions/'
 import axios from '../../axios-orders'
 
-const BurgerBuilder = props => {
+export const BurgerBuilder = props => {
   const [purchasing, setPurchasing] = useState(false)
 
   useEffect(() => {
