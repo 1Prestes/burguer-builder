@@ -25,6 +25,12 @@ export const logout = () => {
   }
 }
 
+export const logoutSucceed = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  }
+}
+
 export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
@@ -33,10 +39,9 @@ export const authFail = error => {
 }
 
 export const checkAuthTimeout = expirationOnTime => {
-  return dispatch => {
-    setTimeout(() => {
-      dispatch(logout())
-    }, expirationOnTime * 1000)
+  return {
+    type: actionTypes.AUTH_CHECK_TIMEOUT,
+    expirationOnTime
   }
 }
 
