@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import * as actionTypes from './actionTypes'
 
 export const authStart = () => {
@@ -17,9 +15,6 @@ export const authSuccess = (token, userId) => {
 }
 
 export const logout = () => {
-  // localStorage.removeItem('token')
-  // localStorage.removeItem('expirationDate')
-  // localStorage.removeItem('userId')
   return {
     type: actionTypes.AUTH_INITIATE_LOGOUT
   }
@@ -46,37 +41,7 @@ export const checkAuthTimeout = expirationOnTime => {
 }
 
 export const auth = (email, password, isSignUp) => {
-  return dispatch => {
-    dispatch(authStart())
-    const authData = {
-      email,
-      password,
-      returnSecureToken: true
-    }
-    let url =
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyArh3jABPr0m1sWLDgSHwlygUi6ON1dzUQ'
-    if (!isSignUp) {
-      url =
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyArh3jABPr0m1sWLDgSHwlygUi6ON1dzUQ'
-    }
-    axios
-      .post(url, authData)
-      .then(response => {
-        const expirationDate = new Date(
-          new Date().getTime() + response.data.expiresIn * 1000
-        )
-
-        localStorage.setItem('token', response.data.idToken)
-        localStorage.setItem('expirationDate', expirationDate)
-        localStorage.setItem('userId', response.data.localId)
-
-        dispatch(authSuccess(response.data.idToken, response.data.localId))
-        dispatch(checkAuthTimeout(response.data.expiresIn))
-      })
-      .catch(error => {
-        dispatch(authFail(error.response.data.error))
-      })
-  }
+  return { type: actionTypes.AUTH_USER, email, password, isSignUp }
 }
 
 export const setAuthRedirectPath = path => {
